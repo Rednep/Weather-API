@@ -1,0 +1,924 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Weather API",
+    "description": "JSON REST API for viewing weather data"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081"
+    }
+  ],
+  "basePath": "",
+  "paths": {
+    "/docs": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Logs in the user",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Logs in the user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "email": "string",
+                "password": "string"
+              },
+              "example": {
+                "email": "example@email.com",
+                "password": "password"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "summary": "Logs out the user",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Logs out the user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "authenticationKey": "88f76721-ff89-46f2-ac3a-c0c8a24d5625"
+              },
+              "example": {
+                "authenticationKey": "88f76721-ff89-46f2-ac3a-c0c8a24d5625"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{authenticationKey}": {
+      "get": {
+        "summary": "Get all users",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authenticationKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{id}/{authenticationKey}": {
+      "get": {
+        "summary": "Get a user by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authenticationKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Gets a user by id"
+        }
+      }
+    },
+    "/users/get-by/{authenticationKey}": {
+      "get": {
+        "summary": "Get a user by authentication key",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authenticationKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Gets a user by their authenticaion key"
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Create a user",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Creates a user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "email": "string",
+                "password": "string",
+                "role": "string",
+                "firstName": "string",
+                "lastName": "string,",
+                "authenticationKey": "string"
+              },
+              "example": {
+                "email": "student@email.com",
+                "password": "abc123",
+                "role": "student",
+                "firstName": "test",
+                "lastName": "test",
+                "authenticationKey": "authKey"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a user by id",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Updates a user by id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "id": "string",
+                "email": "string",
+                "password": "string",
+                "role": "string",
+                "firstName": "string",
+                "lastName": "string,",
+                "authenticationKey": "string"
+              },
+              "example": {
+                "id": "640ea49386348c3384bb4419",
+                "email": "student@email.com",
+                "password": "abc123",
+                "role": "student",
+                "firstName": "test",
+                "lastName": "test",
+                "authenticationKey": "authKey"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete users that haven't logged in for more than 30 days",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Authenticaion key required to delete many",
+          "content": {
+            "application/json": {
+              "schema": {},
+              "example": {
+                "authenticationKey": "88f76721-ff89-46f2-ac3a-c0c8a24d5625"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "summary": "Delete a user by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Deletes a single user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "authenticationKey": "string"
+              },
+              "example": {
+                "authenticationKey": "authKey"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usersLastLogin": {
+      "get": {
+        "summary": "Get all users from last login first",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/deleteUsers": {
+      "delete": {
+        "summary": "Delete many users by id",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Deletes many users by id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "ids": [
+                  "string"
+                ],
+                "authenticationKey": "string"
+              },
+              "example": {
+                "authenticationKey": "0ec6cd91-ad1c-4c60-9e51-cc1b32a11f6a",
+                "ids": [
+                  "640ea49386348c3384bb4419",
+                  "640ea49386348c3384bb4419"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/updateAccessLevel": {
+      "patch": {
+        "summary": "Update access level for at least two users in the same query, based on a date range in which the users were created",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "requestBody": {
+          "description": "Updates access level for at least two users in the same query, based on a date range in which the users were created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "role": "string",
+                "authenticationKey": "string",
+                "startDate": "string",
+                "endDate": "string"
+              },
+              "example": {
+                "role": "admin",
+                "authenticationKey": "4f7ecabb-dbc8-4f9f-9749-f4cfba6fa68e",
+                "startDate": "27/01/2023",
+                "endDate": "29/01/2023"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readings": {
+      "get": {
+        "summary": "Gets all weather readings",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "description": "Gets all weather readings"
+        }
+      },
+      "post": {
+        "summary": "Create a reading document",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Creates a weather document",
+          "content": {
+            "application/json": {
+              "schema": {
+                "authenticationKey": "string",
+                "Device Name": "Brisbane_Sensor",
+                "Precipitation mm/h": 0.085,
+                "Time": "2021-05-07T03:44:04.000+00:00",
+                "Latitude": 152.77891,
+                "Longitude": -26.95064,
+                "Temperature (°C)": 23.07,
+                "Atmospheric Pressure (kPa)": 128.02,
+                "Max Wind Speed (m/s/)": 3.77,
+                "Solar Radiation (W/m2/)": 290.5,
+                "Vapor Pressure (kPa)": 1.72,
+                "Humidity (%)": 71.9,
+                "Wind Direction (°)": 163.3
+              },
+              "example": {
+                "authenticationKey": "12345",
+                "Device Name": "Brisbane_Sensor",
+                "Precipitation mm/h": 0.085,
+                "Time": "2021-05-07T03:44:04.000+00:00",
+                "Latitude": 152.77891,
+                "Longitude": -26.95064,
+                "Temperature (°C)": 23.07,
+                "Atmospheric Pressure (kPa)": 128.02,
+                "Max Wind Speed (m/s/)": 3.77,
+                "Solar Radiation (W/m2/)": 290.5,
+                "Vapor Pressure (kPa)": 1.72,
+                "Humidity (%)": 71.9,
+                "Wind Direction (°)": 163.3
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a reading document by id",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Updates a weather document by id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "authenticationKey": "string",
+                "id": "string",
+                "deviceName": "string",
+                "precipitation": "number",
+                "time": "string",
+                "latitude": "number",
+                "longitude": "number,",
+                "temperature": "number",
+                "atmosphericPressure": "number",
+                "windSpeed": "number",
+                "solarRadiation": "number",
+                "vaporPressure": "number",
+                "humidity": "number",
+                "windDirection": "number"
+              },
+              "example": {
+                "authenticationKey": "12345",
+                "id": "string",
+                "Device Name": "Brisbane_Sensor",
+                "Precipitation mm/h": 0.085,
+                "Time": "2021-05-07T03:44:04.000+00:00",
+                "Latitude": 152.77891,
+                "Longitude": -26.95064,
+                "Temperature (°C)": 23.07,
+                "Atmospheric Pressure (kPa)": 128.02,
+                "Max Wind Speed (m/s/)": 3.77,
+                "Solar Radiation (W/m2/)": 290.5,
+                "Vapor Pressure (kPa)": 1.72,
+                "Humidity (%)": 71.9,
+                "Wind Direction (°)": 163.3
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readings/paged/{page}": {
+      "get": {
+        "summary": "Gets all weather readings in pages",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/readings/{id}": {
+      "get": {
+        "summary": "Get a reading by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the reading to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a reading document by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The id of the reading to update"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Updates a weather document by id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "authenticationKey": "string",
+                "deviceName": "string",
+                "precipitation": "number",
+                "time": "string",
+                "latitude": "number",
+                "longitude": "number,",
+                "temperature": "number",
+                "atmosphericPressure": "number",
+                "windSpeed": "number",
+                "solarRadiation": "number",
+                "vaporPressure": "number",
+                "humidity": "number",
+                "windDirection": "number"
+              },
+              "example": {
+                "authenticationKey": "12345",
+                "Device Name": "Brisbane_Sensor",
+                "Precipitation mm/h": 0.085,
+                "Time": "2021-05-07T03:44:04.000+00:00",
+                "Latitude": 152.77891,
+                "Longitude": -26.95064,
+                "Temperature (°C)": 23.07,
+                "Atmospheric Pressure (kPa)": 128.02,
+                "Max Wind Speed (m/s/)": 3.77,
+                "Solar Radiation (W/m2/)": 290.5,
+                "Vapor Pressure (kPa)": 1.72,
+                "Humidity (%)": 71.9,
+                "Wind Direction (°)": 163.3
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a reading document by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Deletes a weather document",
+          "content": {
+            "application/json": {
+              "schema": {
+                "authenticationKey": "string"
+              },
+              "example": {
+                "authenticationKey": "12345"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readings/device/{deviceName}": {
+      "get": {
+        "summary": "Get a reading by device name",
+        "description": "",
+        "parameters": [
+          {
+            "name": "deviceName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Device name of the reading to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/readings/many": {
+      "post": {
+        "summary": "Creates many readings",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Adds new readings from an array of documents",
+          "content": {
+            "application/json": {
+              "schema": {
+                "authenticationKey": "string",
+                "readings": "array"
+              },
+              "example": {
+                "authenticationKey": "12345",
+                "readings": [
+                  {
+                    "Device Name": "Brisbane_Sensor",
+                    "Precipitation mm/h": 0.085,
+                    "Time": "2021-05-07T03:44:04.000+00:00",
+                    "Latitude": 152.77891,
+                    "Longitude": -26.95064,
+                    "Temperature (°C)": 23.07,
+                    "Atmospheric Pressure (kPa)": 128.02,
+                    "Max Wind Speed (m/s/)": 3.77,
+                    "Solar Radiation (W/m2/)": 290.5,
+                    "Vapor Pressure (kPa)": 1.72,
+                    "Humidity (%)": 71.9,
+                    "Wind Direction (°)": 163.3
+                  },
+                  {
+                    "Device Name": "Brisbane_Sensor",
+                    "Precipitation mm/h": 0.085,
+                    "Time": "2021-05-07T03:44:04.000+00:00",
+                    "Latitude": 152.77891,
+                    "Longitude": -26.95064,
+                    "Temperature (°C)": 23.07,
+                    "Atmospheric Pressure (kPa)": 128.02,
+                    "Max Wind Speed (m/s/)": 3.77,
+                    "Solar Radiation (W/m2/)": 290.5,
+                    "Vapor Pressure (kPa)": 1.72,
+                    "Humidity (%)": 71.9,
+                    "Wind Direction (°)": 163.3
+                  },
+                  {
+                    "Device Name": "Brisbane_Sensor",
+                    "Precipitation mm/h": 0.085,
+                    "Time": "2021-05-07T03:44:04.000+00:00",
+                    "Latitude": 152.77891,
+                    "Longitude": -26.95064,
+                    "Temperature (°C)": 23.07,
+                    "Atmospheric Pressure (kPa)": 128.02,
+                    "Max Wind Speed (m/s/)": 3.77,
+                    "Solar Radiation (W/m2/)": 290.5,
+                    "Vapor Pressure (kPa)": 1.72,
+                    "Humidity (%)": 71.9,
+                    "Wind Direction (°)": 163.3
+                  },
+                  {
+                    "Device Name": "Brisbane_Sensor",
+                    "Precipitation mm/h": 0.085,
+                    "Time": "2021-05-07T03:44:04.000+00:00",
+                    "Latitude": 152.77891,
+                    "Longitude": -26.95064,
+                    "Temperature (°C)": 23.07,
+                    "Atmospheric Pressure (kPa)": 128.02,
+                    "Max Wind Speed (m/s/)": 3.77,
+                    "Solar Radiation (W/m2/)": 290.5,
+                    "Vapor Pressure (kPa)": 1.72,
+                    "Humidity (%)": 71.9,
+                    "Wind Direction (°)": 163.3
+                  },
+                  {
+                    "Device Name": "Brisbane_Sensor",
+                    "Precipitation mm/h": 0.085,
+                    "Time": "2021-05-07T03:44:04.000+00:00",
+                    "Latitude": 152.77891,
+                    "Longitude": -26.95064,
+                    "Temperature (°C)": 23.07,
+                    "Atmospheric Pressure (kPa)": 128.02,
+                    "Max Wind Speed (m/s/)": 3.77,
+                    "Solar Radiation (W/m2/)": 290.5,
+                    "Vapor Pressure (kPa)": 1.72,
+                    "Humidity (%)": 71.9,
+                    "Wind Direction (°)": 163.3
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/max-precipitation/device/{deviceName}": {
+      "get": {
+        "summary": "Get the max precipitation over the last 5 months for a specific device",
+        "description": "",
+        "parameters": [
+          {
+            "name": "deviceName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Get the max precipitation over the last 5 months for a specific device"
+        }
+      }
+    },
+    "/readings/device/{deviceName}/time/{time}": {
+      "get": {
+        "summary": "Get the temperature, atmospheric pressure, radiation, and precipitation for a specific sensor at a specific date and time",
+        "description": "",
+        "parameters": [
+          {
+            "name": "deviceName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the device"
+          },
+          {
+            "name": "time",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The date and time of the reading"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/max-temp/{startDate}/{endDate}": {
+      "get": {
+        "summary": "Get the maximum temperature recorded for all stations for a given date range",
+        "description": "",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Get the maximum temperature recorded for all stations for a given date range",
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/latest-readings": {
+      "get": {
+        "summary": "Get the latest three weather readings per device",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Get the latest three weather readings per device",
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    },
+    "/updatePrecipitation": {
+      "patch": {
+        "summary": "Update a specific readings precipitation value to a given value",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "description": "Updates a specific readings precipitation value to a given value",
+          "content": {
+            "application/json": {
+              "schema": {
+                "id": "string",
+                "Precipitation mm/h": "number",
+                "authenticationKey": "string"
+              },
+              "example": {
+                "id": "63f7081c830c4626a8eac308",
+                "Precipitation mm/h": 0.085,
+                "authenticationKey": "0ec6cd91-ad1c-4c60-9e51-cc1b32a11f6a"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
